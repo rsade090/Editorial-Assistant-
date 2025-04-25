@@ -60,6 +60,8 @@ def chunker():
                     "content_id": article.get("content_id"),
                     "content_headline": article.get("content_headline"),
                     "content_publish_time": article.get("content_publish_time"),
+                    "content_categories": article.get("content_categories"),
+                    "content_department_path": article.get("content_department_path"),
                     "chunk_index": idx,
                     "chunk": chunk
                 }
