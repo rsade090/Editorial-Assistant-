@@ -45,8 +45,12 @@ def get_relevant_chunks(query, chat_history= "", k= 10, index_path= "data"):
     SYSTEM_PROMPT = """\
     You are an ID extractor. Given the user’s query plus chat history, find **all** numeric identifiers—whether \
     they appear as id, [id], "id", or just standalone numbers—and return them **exactly** as **strings** \
-    in a Python list literal—nothing else, and **do not** wrap that list in quotes.
-
+    in a Python list literal—nothing else, and **do not** wrap that list in quotes. 
+    If the user query is not related to the previous chats, do not add any id from the previous chats, unless\
+    the user query is a reponse to a question in the last chat history. So you should consider related conetnt ids in the chat history. for example if you\
+        answer/bring an article with its source as answer. if the user wants to know more about the article you have to identify that content_id. if the user say yes to the\
+            question "Would you like to see the full content of the article?", you have to bes sure identify that as an ID for sure.
+    
     **Output format:**  
     - A Python list of string literals: ["id1", "id2", ...]  
     - If no IDs are found, return an empty list: []
@@ -58,9 +62,6 @@ def get_relevant_chunks(query, chat_history= "", k= 10, index_path= "data"):
 
     User: Please fetch [id]: 100, "id": 200, and also 3.14 somewhere else.  
     Output: ["100", "200", "3.14"]
-
-    User: There is no identifier here.  
-    Output: []
 
     User: Mixed content id123 but also 456 and [id]:789.  
     Output: ["123", "456", "789"]
@@ -82,6 +83,7 @@ def get_relevant_chunks(query, chat_history= "", k= 10, index_path= "data"):
         ids = []
 
     if id_list is not None:
+        print("ids found:", id_list)
         try:
             exact_docs = []
             for id in ids:

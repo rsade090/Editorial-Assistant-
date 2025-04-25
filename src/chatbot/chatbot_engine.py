@@ -32,7 +32,7 @@ def find_user_intent(query, chat_history):
     The user may ask about editorial policies, request an article by content ID or headline, or ask for an SEO-optimized \
     headline or social media summary based on a given article. Your response should be a single word indicating the intent: \
     The exact intents are as follows and you should return the exact string as it is:
-    - "article" for requests to retrieve an article/ news by content ID or headline
+    - "article" for requests to retrieve an article/ news or genral questions about an accident or event or location
     - "headline" for requests to generate an SEO-optimized headline
     - "summary" for requests to summarize an article
     - "social_media" for requests to generate a social media summary
@@ -57,23 +57,23 @@ def chat(query, placeholder=None, model = "gpt-4o"):
     history_str = "\n".join([f"{m.type.capitalize()}: {m.content}" for m in chat_history.messages])
     response = ""
     
-    intent = find_user_intent(query, chat_history=history_str)
+    # intent = find_user_intent(query, chat_history=history_str)
     
     chunks = get_relevant_chunks(query, chat_history=history_str, k=20)
-    if intent == "article":
-        prompt = ARTICLE_PROMPT
-    elif intent == "headline":
-        prompt = HEADLINE_PROMPT
-    elif intent == "summary":
-        prompt = SUMMARY_PROMPT
-    elif intent == "social_media":
-        prompt = SOCIAL_MEDIA_PROMPT
-    elif intent == "guideline":
-        prompt = POLICY_QA_PROMPT
-    else:
-        prompt = POLICY_QA_PROMPT          
+    # if intent == "article":
+    #     prompt_t = ARTICLE_PROMPT
+    # elif intent == "headline":
+    #     prompt_t = HEADLINE_PROMPT
+    # elif intent == "summary":
+    #     prompt_t = SUMMARY_PROMPT
+    # elif intent == "social_media":
+    #     prompt_t = SOCIAL_MEDIA_PROMPT
+    # elif intent == "guideline":
+    #     prompt_t = POLICY_QA_PROMPT
+    # else:
+    prompt_t = POLICY_QA_PROMPT          
 
-    prompt = POLICY_QA_PROMPT.format_prompt(
+    prompt = prompt_t.format_prompt(
         question=query,
         context=chunks,
         chat_history=history_str
