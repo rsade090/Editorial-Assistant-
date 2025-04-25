@@ -1,7 +1,6 @@
 import numpy as np
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.docstore.document import Document
 from dotenv import load_dotenv
 from openai import OpenAI
 import ast

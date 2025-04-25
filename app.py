@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.chatbot_engine import chat, clear_history
+from src.chatbot.chatbot_engine import chat, clear_history
 
 
 

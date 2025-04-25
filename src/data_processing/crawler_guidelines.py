@@ -1,5 +1,5 @@
 import json
-from utils.utils import *
+from src.utils.utils import *
 import requests
 from pathlib import Path
 from playwright.sync_api import sync_playwright, TimeoutError
